@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Gerrit UI Switcher",
+  "description": "Easily switch between the current Gerrit UI and the new PolyGerrit UI",
+  "version": "0.2",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "page_action": {
+    "default_icon": {
+      "38": "icon.png"
+    },
+    "default_title": "Toggle PolyGerrit UI"
+  },
+  "permissions": [
+    "cookies",
+    "declarativeContent",
+    "tabs",
+    "webRequest",
+    "*://*.googlesource.com/*"
+  ]
+}
