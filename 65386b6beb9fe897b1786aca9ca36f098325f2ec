@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674856fe_beaeb951",
+        "filename": "background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1010008
+      },
+      "writtenOn": "2016-01-18T16:58:23Z",
+      "side": 1,
+      "message": "License header in this file",
+      "revId": "65386b6beb9fe897b1786aca9ca36f098325f2ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
