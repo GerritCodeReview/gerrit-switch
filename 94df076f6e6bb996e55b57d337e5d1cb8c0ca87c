@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a78c0e88_b00fb87a",
+        "filename": "manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1021482
+      },
+      "writtenOn": "2016-01-18T23:35:39Z",
+      "side": 1,
+      "message": "You also need to update background.js to account for gerrithub.io URLs",
+      "revId": "94df076f6e6bb996e55b57d337e5d1cb8c0ca87c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
