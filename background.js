@@ -12,29 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-chrome.runtime.onInstalled.addListener(function() {
-  var loadImages = new Promise(function(resolve) {
+function loadImage(path, width, height) {
+  return new Promise(function(resolve) {
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
-    var inactiveImage = new Image();
-    var inactiveImageData;
-    var activeImage = new Image();
-    var activeImageData;
-    activeImage.onload = function() {
-      ctx.drawImage(activeImage, 0, 0, 38, 38);
-      var activeImageData = ctx.getImageData(0, 0, 38, 38);
-
-      inactiveImage.onload = function() {
-        ctx.drawImage(inactiveImage, 0, 0, 38, 38);
-        inactiveImageData = ctx.getImageData(0, 0, 38, 38);
-        resolve({active: activeImageData, inactive: inactiveImageData});
-      }
-      inactiveImage.src = chrome.runtime.getURL('icon.png');
-    }
-    activeImage.src = chrome.runtime.getURL('icon_active.png');
+    var image = new Image();
+    var imageData;
+    image.onload = function() {
+      ctx.drawImage(image, 0, 0, width, height);
+      imageData = ctx.getImageData(0, 0, width, height);
+      resolve(imageData);
+    };
+    image.src = chrome.runtime.getURL(path);
   });
+}
 
-  loadImages.then(function(imageData) {
+chrome.runtime.onInstalled.addListener(function() {
+  var loadImages = Promise.all([
+    loadImage('icon_active_19.png', 19, 19),
+    loadImage('icon_active_38.png', 38, 38),
+  ]);
+
+  loadImages.then(function(imageDataArray) {
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
       chrome.declarativeContent.onPageChanged.addRules([
         {
@@ -52,12 +51,20 @@ chrome.runtime.onInstalled.addListener(function() {
               css: ['gr-app'],
             })
           ],
-          actions: [ new chrome.declarativeContent.SetIcon({imageData: {38: imageData.active}}) ]
+          actions: [ new chrome.declarativeContent.SetIcon({
+            imageData: {
+              19: imageDataArray[0],
+              38: imageDataArray[1],
+            }
+          })]
         }
       ]);
     });
   });
 
+  // There is no option to update a tab URL while also bypassing the cache. Hack
+  // around this limitation by setting a tab ID to be reloaded the the tab
+  // update callback below.
   var tabIDToReload = null;
   chrome.webRequest.onCompleted.addListener(
     function(details) {
@@ -76,6 +83,7 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.cookies.get(cookieID, function(cookie) {
       if (cookie) {
         chrome.cookies.remove(cookieID, function() {
+          // The GWT UI does not handle PolyGerrit URL redirection.
           chrome.tabs.update(tab.id, {
             url: tab.url.replace('googlesource.com/', 'googlesource.com/#/')
           }, function(tab) {
@@ -91,6 +99,7 @@ chrome.runtime.onInstalled.addListener(function() {
           path: '/',
           secure: true,
         }, function() {
+          // PolyGerrit handles Gerrit URL -> PolyGerrit URL redirection.
           chrome.tabs.reload(tab.id, {bypassCache: true});
         });
       }
