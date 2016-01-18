@@ -18,6 +18,7 @@
     "declarativeContent",
     "tabs",
     "webRequest",
-    "*://*.googlesource.com/*"
+    "*://*.googlesource.com/*",
+    "*://review.gerrithub.io/*"
   ]
 }
