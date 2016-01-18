@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674856fe_de9f0527",
+        "filename": "LICENSE",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1021482
+      },
+      "writtenOn": "2016-01-18T16:42:48Z",
+      "side": 1,
+      "message": "Should I maintain this?",
+      "revId": "95cf5028cee251c8d0e54cc55f87a9792f87eacb",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
