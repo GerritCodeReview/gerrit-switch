@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "67f4d602_1ebaed87",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1023913
+      },
+      "writtenOn": "2016-01-21T21:43:26Z",
+      "side": 1,
+      "message": "It was working, then it stopped working, and now it’s working again (with or without the comma). I looked for a way to express “not hostPrefix canary-” but couldn’t find any.",
+      "parentUuid": "67f4d602_dec7e51a",
+      "revId": "f9ef35c5a6a7488545d754ee110ee5d592254238",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74980634_7e9e717c",
         "filename": "icon_canary_38.png",
         "patchSetId": 1
