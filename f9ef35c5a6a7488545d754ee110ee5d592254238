@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74980634_7e9e717c",
+        "filename": "icon_canary_38.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1023913
+      },
+      "writtenOn": "2016-01-21T20:37:28Z",
+      "side": 1,
+      "message": "These new icons could use some work. I took the gray ones and did a canary yellow fill, but the PG text was anti-aliased so it doesn’t loo amazing. If you had checked in some source images, it would have been easier to deal with, but maybe you didn’t bother hanging on to source because these are too simple and stupid for it to matter.\n\nAnyway, rather than cry about it, I figured that you could make new canary yellow ones the same way you made the others more easily than I could try to match what you did precisely.",
+      "revId": "f9ef35c5a6a7488545d754ee110ee5d592254238",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
