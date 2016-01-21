@@ -31,6 +31,8 @@ chrome.runtime.onInstalled.addListener(function() {
   var loadImages = Promise.all([
     loadImage('icon_active_19.png', 19, 19),
     loadImage('icon_active_38.png', 38, 38),
+    loadImage('icon_canary_19.png', 19, 19),
+    loadImage('icon_canary_38.png', 38, 38),
   ]);
 
   loadImages.then(function(imageDataArray) {
@@ -57,6 +59,23 @@ chrome.runtime.onInstalled.addListener(function() {
               38: imageDataArray[1],
             }
           })]
+        },
+        {
+          conditions: [
+            new chrome.declarativeContent.PageStateMatcher({
+              pageUrl: {
+                hostPrefix: 'canary-',
+                hostSuffix: '-review.googlesource.com'
+              },
+              css: ['gr-app']
+            })
+          ],
+          actions: [ new chrome.declarativeContent.SetIcon({
+            imageData: {
+              19: imageDataArray[2],
+              38: imageDataArray[3],
+            }
+          })]
         }
       ]);
     });
@@ -81,26 +100,63 @@ chrome.runtime.onInstalled.addListener(function() {
       url: tab.url,
     };
     chrome.cookies.get(cookieID, function(cookie) {
-      if (cookie) {
-        chrome.cookies.remove(cookieID, function() {
-          // The GWT UI does not handle PolyGerrit URL redirection.
-          chrome.tabs.update(tab.id, {
-            url: tab.url.replace('googlesource.com/', 'googlesource.com/#/')
-          }, function(tab) {
-            tabIDToReload = tab.id;
-          });
-        });
+      var isPolyGerrit = !!cookie;
+      var isCanary = tab.url.indexOf('//canary-') != -1;
+
+      var wantPolyGerrit = isPolyGerrit;
+      var wantCanary = isCanary;
+      if (!isPolyGerrit) {
+        wantPolyGerrit = true;
+      } else if (!isCanary) {
+        wantCanary = true;
       } else {
+        wantPolyGerrit = false;
+        wantCanary = false;
+      }
+
+      var newURL = tab.url;
+      if (!isCanary && wantCanary) {
+        newURL = newURL.replace('//', '//canary-');
+      } else if (isCanary && !wantCanary) {
+        newURL = newURL.replace('//canary-', '//');
+      }
+
+      // PolyGerrit handles Gerrit URL -> PolyGerrit URL redirection, but the
+      // GWT UI doesn't handle PolyGerrit URL redirection when going the other
+      // way.
+      if (isPolyGerrit && !wantPolyGerrit) {
+        newURL = newURL.replace('googlesource.com/', 'googlesource.com/#/');
+      }
+
+      var switchURL = tab.url != newURL;
+      cookieID.url = newURL;
+
+      if (wantPolyGerrit) {
         chrome.cookies.set({
-          url: tab.url,
-          name: 'GERRIT_UI',
+          url: cookieID.url,
+          name: cookieID.name,
           value: 'polygerrit',
           httpOnly: true ,
           path: '/',
           secure: true,
         }, function() {
-          // PolyGerrit handles Gerrit URL -> PolyGerrit URL redirection.
-          chrome.tabs.reload(tab.id, {bypassCache: true});
+          if (!switchURL) {
+            chrome.tabs.reload(tab.id, {bypassCache: true});
+          } else {
+            chrome.tabs.update(tab.id, { url: newURL }, function (tab) {
+              tabIDToReload = tab.id;
+            });
+          }
+        });
+      } else {
+        chrome.cookies.remove(cookieID, function() {
+          if (!switchURL) {
+            chrome.tabs.reload(tab.id, {bypassCache: true});
+          } else {
+            chrome.tabs.update(tab.id, { url: newURL }, function (tab) {
+              tabIDToReload = tab.id;
+            });
+          }
         });
       }
     });
