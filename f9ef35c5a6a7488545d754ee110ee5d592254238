@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "67f4d602_be9f7927",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1023913
+      },
+      "writtenOn": "2016-01-21T20:47:00Z",
+      "side": 1,
+      "message": "I initially had a comma at the end of this line, like on line 53. It didn’t work that way. When I took the comma away, it magically started working.\n\nI don’t really believe that the comma had any significance, but I’m wondering if maybe I need to test for NOT prefix canary- in the previous rule?",
+      "revId": "f9ef35c5a6a7488545d754ee110ee5d592254238",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74980634_7e9e717c",
         "filename": "icon_canary_38.png",
         "patchSetId": 1
