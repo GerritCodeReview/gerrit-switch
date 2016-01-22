@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "149d0a26_dbe473ce",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1023913
+      },
+      "writtenOn": "2016-01-22T18:04:28Z",
+      "side": 1,
+      "message": "We think that this is an ordering thing, where the non-canary PolyGerrit rule and the canary rule both match the canary. We don’t know of a way to express “not” here. We’re waiting for some feedback on how to handle this.",
+      "parentUuid": "67f4d602_1ebaed87",
+      "revId": "f9ef35c5a6a7488545d754ee110ee5d592254238",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74980634_7e9e717c",
         "filename": "icon_canary_38.png",
         "patchSetId": 1
