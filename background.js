@@ -12,6 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-73551813-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script');
+  ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(ga, s);
+})();
+
+var RequestType = {
+  NAV: 'nav',
+};
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.type == RequestType.NAV) {
+    _gaq.push(['_trackPageview', request.url]);
+  }
+});
+
 function loadImage(path, width, height) {
   return new Promise(function(resolve) {
     var canvas = document.createElement('canvas');
@@ -82,6 +104,7 @@ chrome.runtime.onInstalled.addListener(function() {
     };
     chrome.cookies.get(cookieID, function(cookie) {
       if (cookie) {
+        _gaq.push(['_trackEvent', 'Page Action', 'Switch to Gerrit']);
         chrome.cookies.remove(cookieID, function() {
           // The GWT UI does not handle PolyGerrit URL redirection.
           chrome.tabs.update(tab.id, {
@@ -91,11 +114,12 @@ chrome.runtime.onInstalled.addListener(function() {
           });
         });
       } else {
+        _gaq.push(['_trackEvent', 'Page Action', 'Switch to PolyGerrit']);
         chrome.cookies.set({
           url: tab.url,
           name: 'GERRIT_UI',
           value: 'polygerrit',
-          httpOnly: true ,
+          httpOnly: true,
           path: '/',
           secure: true,
         }, function() {
