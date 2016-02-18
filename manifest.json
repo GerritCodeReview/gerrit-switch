@@ -1,11 +1,12 @@
 {
   "manifest_version": 2,
-
   "name": "Gerrit UI Switcher",
   "description": "Easily switch between the current Gerrit UI and the new PolyGerrit UI",
-  "version": "0.4",
+  "version": "0.4.1",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "page_action": {
     "default_icon": {
@@ -16,7 +17,10 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.googlesource.com/*"],
+      "matches": [
+        "*://*.googlesource.com/*",
+        "*://*.git.corp.google.com/*"
+      ],
       "js": [
         "content.js"
       ]
@@ -27,7 +31,8 @@
     "declarativeContent",
     "tabs",
     "webRequest",
-    "*://*.googlesource.com/*"
+    "*://*.googlesource.com/*",
+    "*://*.git.corp.google.com/*"
   ],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

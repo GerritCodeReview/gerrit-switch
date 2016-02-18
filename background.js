@@ -62,7 +62,10 @@ chrome.runtime.onInstalled.addListener(function() {
           conditions: [
             new chrome.declarativeContent.PageStateMatcher({
               pageUrl: { hostSuffix: '-review.googlesource.com' },
-            })
+            }),
+            new chrome.declarativeContent.PageStateMatcher({
+              pageUrl: { hostSuffix: '-review.git.corp.google.com' },
+            }),
           ],
           // And shows the extension's page action.
           actions: [ new chrome.declarativeContent.ShowPageAction() ]
@@ -95,7 +98,13 @@ chrome.runtime.onInstalled.addListener(function() {
         tabIDToReload = null;
       }
     },
-    {urls: ['*://*.googlesource.com/*']});
+    {
+      urls: [
+        '*://*.googlesource.com/*',
+        "*://*.git.corp.google.com/*",
+      ]
+    }
+  );
 
   chrome.pageAction.onClicked.addListener(function(tab) {
     var cookieID = {
@@ -108,7 +117,7 @@ chrome.runtime.onInstalled.addListener(function() {
         chrome.cookies.remove(cookieID, function() {
           // The GWT UI does not handle PolyGerrit URL redirection.
           chrome.tabs.update(tab.id, {
-            url: tab.url.replace('googlesource.com/', 'googlesource.com/#/')
+            url: tab.url.replace('.com/', '.com/#/')
           }, function(tab) {
             tabIDToReload = tab.id;
           });
