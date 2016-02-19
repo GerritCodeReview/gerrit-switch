@@ -86,56 +86,56 @@ chrome.runtime.onInstalled.addListener(function() {
       ]);
     });
   });
+});
 
-  // There is no option to update a tab URL while also bypassing the cache. Hack
-  // around this limitation by setting a tab ID to be reloaded in the tab update
-  // callback below.
-  var tabIDToReload = null;
-  chrome.webRequest.onCompleted.addListener(
-    function(details) {
-      if (details.type == 'main_frame' && tabIDToReload != null) {
-        chrome.tabs.reload(tabIDToReload, {bypassCache: true});
-        tabIDToReload = null;
-      }
-    },
-    {
-      urls: [
-        '*://*.googlesource.com/*',
-        "*://*.git.corp.google.com/*",
-      ]
+// There is no option to update a tab URL while also bypassing the cache. Hack
+// around this limitation by setting a tab ID to be reloaded in the tab update
+// callback below.
+var tabIDToReload = null;
+chrome.webRequest.onCompleted.addListener(
+  function(details) {
+    if (details.type == 'main_frame' && tabIDToReload != null) {
+      chrome.tabs.reload(tabIDToReload, {bypassCache: true});
+      tabIDToReload = null;
     }
-  );
+  },
+  {
+    urls: [
+      '*://*.googlesource.com/*',
+      "*://*.git.corp.google.com/*",
+    ]
+  }
+);
 
-  chrome.pageAction.onClicked.addListener(function(tab) {
-    var cookieID = {
-      name: 'GERRIT_UI',
-      url: tab.url,
-    };
-    chrome.cookies.get(cookieID, function(cookie) {
-      if (cookie) {
-        _gaq.push(['_trackEvent', 'Page Action', 'Switch to Gerrit']);
-        chrome.cookies.remove(cookieID, function() {
-          // The GWT UI does not handle PolyGerrit URL redirection.
-          chrome.tabs.update(tab.id, {
-            url: tab.url.replace('.com/', '.com/#/')
-          }, function(tab) {
-            tabIDToReload = tab.id;
-          });
+chrome.pageAction.onClicked.addListener(function(tab) {
+  var cookieID = {
+    name: 'GERRIT_UI',
+    url: tab.url,
+  };
+  chrome.cookies.get(cookieID, function(cookie) {
+    if (cookie) {
+      _gaq.push(['_trackEvent', 'Page Action', 'Switch to Gerrit']);
+      chrome.cookies.remove(cookieID, function() {
+        // The GWT UI does not handle PolyGerrit URL redirection.
+        chrome.tabs.update(tab.id, {
+          url: tab.url.replace('.com/', '.com/#/')
+        }, function(tab) {
+          tabIDToReload = tab.id;
         });
-      } else {
-        _gaq.push(['_trackEvent', 'Page Action', 'Switch to PolyGerrit']);
-        chrome.cookies.set({
-          url: tab.url,
-          name: 'GERRIT_UI',
-          value: 'polygerrit',
-          httpOnly: true,
-          path: '/',
-          secure: true,
-        }, function() {
-          // PolyGerrit handles Gerrit URL -> PolyGerrit URL redirection.
-          chrome.tabs.reload(tab.id, {bypassCache: true});
-        });
-      }
-    });
+      });
+    } else {
+      _gaq.push(['_trackEvent', 'Page Action', 'Switch to PolyGerrit']);
+      chrome.cookies.set({
+        url: tab.url,
+        name: 'GERRIT_UI',
+        value: 'polygerrit',
+        httpOnly: true,
+        path: '/',
+        secure: true,
+      }, function() {
+        // PolyGerrit handles Gerrit URL -> PolyGerrit URL redirection.
+        chrome.tabs.reload(tab.id, {bypassCache: true});
+      });
+    }
   });
 });
