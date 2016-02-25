@@ -19,7 +19,8 @@
     {
       "matches": [
         "*://*.googlesource.com/*",
-        "*://*.git.corp.google.com/*"
+        "*://*.git.corp.google.com/*",
+        "*://*.staging-git.corp.google.com/*"
       ],
       "js": [
         "content.js"
@@ -32,7 +33,8 @@
     "tabs",
     "webRequest",
     "*://*.googlesource.com/*",
-    "*://*.git.corp.google.com/*"
+    "*://*.git.corp.google.com/*",
+    "*://*.staging-git.corp.google.com/*"
   ],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

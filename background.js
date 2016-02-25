@@ -66,6 +66,9 @@ chrome.runtime.onInstalled.addListener(function() {
             new chrome.declarativeContent.PageStateMatcher({
               pageUrl: { hostSuffix: '-review.git.corp.google.com' },
             }),
+            new chrome.declarativeContent.PageStateMatcher({
+              pageUrl: { hostSuffix: '-review.staging-git.corp.google.com' },
+            }),
           ],
           // And shows the extension's page action.
           actions: [ new chrome.declarativeContent.ShowPageAction() ]
@@ -103,6 +106,7 @@ chrome.webRequest.onCompleted.addListener(
     urls: [
       '*://*.googlesource.com/*',
       "*://*.git.corp.google.com/*",
+      "*://*.staging-git.corp.google.com/*",
     ]
   }
 );
