@@ -91,6 +91,14 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
+var WEB_REQUEST_FILTER_URLS = {
+  urls: [
+    '*://*.googlesource.com/*',
+    "*://*.git.corp.google.com/*",
+    "*://*.staging-git.corp.google.com/*",
+  ]
+};
+
 // There is no option to update a tab URL while also bypassing the cache. Hack
 // around this limitation by setting a tab ID to be reloaded in the tab update
 // callback below.
@@ -102,13 +110,47 @@ chrome.webRequest.onCompleted.addListener(
       tabIDToReload = null;
     }
   },
-  {
-    urls: [
-      '*://*.googlesource.com/*',
-      "*://*.git.corp.google.com/*",
-      "*://*.staging-git.corp.google.com/*",
-    ]
+  WEB_REQUEST_FILTER_URLS
+);
+
+var POLYGERRIT_PATH_PREFIXES = [
+  '/c/',
+  '/q/',
+  '/dashboard/',
+];
+
+function getGWTRedirectURL(url) {
+  var hash = url.hash.substring(1);
+  var pathname = url.pathname;
+  if (pathname.startsWith('/c/') && parseInt(hash, 10) > 0) {
+    pathname += '@' + hash;
   }
+  url.hash = '#' + pathname;
+  url.pathname = '';
+  return url.toString();
+}
+
+chrome.webRequest.onHeadersReceived.addListener(
+  function(details) {
+    if (details.type != 'main_frame' || details.statusCode != 404) {
+      return {};
+    }
+
+    var url = new URL(details.url);
+    var polygerritPath = false;
+    for (var i = 0; i < POLYGERRIT_PATH_PREFIXES.length; i++) {
+      if (url.pathname.startsWith(POLYGERRIT_PATH_PREFIXES[i])) {
+        polygerritPath = true;
+        break;
+      }
+    }
+    if (polygerritPath) {
+      return {redirectUrl: getGWTRedirectURL(url)};
+    }
+    return {};
+  },
+  WEB_REQUEST_FILTER_URLS,
+  ['blocking']
 );
 
 chrome.pageAction.onClicked.addListener(function(tab) {
@@ -122,7 +164,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
       chrome.cookies.remove(cookieID, function() {
         // The GWT UI does not handle PolyGerrit URL redirection.
         chrome.tabs.update(tab.id, {
-          url: tab.url.replace('.com/', '.com/#/')
+          url: getGWTRedirectURL(new URL(tab.url)),
         }, function(tab) {
           tabIDToReload = tab.id;
         });
