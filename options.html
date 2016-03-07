@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>My Test Extension Options</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  label,
+  button {
+    cursor: pointer;
+  }
+  input[type="checkbox"] {
+    margin-right: 4px;
+    vertical-align: -2px;
+  }
+  .bottomContainer {
+    align-items: center;
+    display: flex;
+    margin-top: 10px;
+  }
+  .saveButton {
+    margin-right: 10px;
+  }
+  .statusMessage {
+    color: #666;
+  }
+</style>
+<body>
+<label>
+  <input type="checkbox" class="likeCheckbox">
+  Always use canary on *.googlesource.com domains
+</label>
+<div class="bottomContainer">
+  <button class="saveButton">Save</button>
+  <div class="statusMessage"></div>
+</div>
+<script src="options.js"></script>
