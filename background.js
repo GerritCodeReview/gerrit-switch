@@ -29,7 +29,7 @@ var RequestType = {
 };
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.type == RequestType.NAV) {
+  if (request.type === RequestType.NAV) {
     _gaq.push(['_trackPageview', request.url]);
   }
 });
@@ -105,7 +105,7 @@ var WEB_REQUEST_FILTER_URLS = {
 var tabIDToReload = null;
 chrome.webRequest.onCompleted.addListener(
   function(details) {
-    if (details.type == 'main_frame' && tabIDToReload != null) {
+    if (details.type === 'main_frame' && tabIDToReload != null) {
       chrome.tabs.reload(tabIDToReload, {bypassCache: true});
       tabIDToReload = null;
     }
@@ -130,11 +130,27 @@ function getGWTRedirectURL(url) {
   return url.toString();
 }
 
+var useCanary;
+
+chrome.storage.sync.get({
+  canary: false,
+}, function(items) {
+  useCanary = items.canary;
+});
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  if (namespace !== 'sync') { return; }
+
+  for (key in changes) {
+    if (key === 'canary') {
+      useCanary = changes[key].newValue;
+    }
+  }
+});
+
 chrome.webRequest.onHeadersReceived.addListener(
   function(details) {
-    if (details.type != 'main_frame' || details.statusCode != 404) {
-      return {};
-    }
+    if (details.type !== 'main_frame') { return {}; }
 
     var url = new URL(details.url);
     var polygerritPath = false;
@@ -144,9 +160,17 @@ chrome.webRequest.onHeadersReceived.addListener(
         break;
       }
     }
-    if (polygerritPath) {
+    if (!polygerritPath) { return {}; }
+
+    if (details.statusCode === 404) {
       return {redirectUrl: getGWTRedirectURL(url)};
+    } if (useCanary &&
+          url.hostname.endsWith('-review.googlesource.com') &&
+          !url.hostname.startsWith('canary')) {
+      url.hostname = 'canary-' + url.hostname;
+      return {redirectUrl: url.toString()};
     }
+
     return {};
   },
   WEB_REQUEST_FILTER_URLS,
