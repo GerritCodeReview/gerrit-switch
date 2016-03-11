@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7479d3c_ac08034d",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1024147
+      },
+      "writtenOn": "2016-03-11T14:44:58Z",
+      "side": 1,
+      "message": "test. Please ignore.",
+      "revId": "67e5198a6a17782174ddcd5423ba2bcc84e6cc01",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
