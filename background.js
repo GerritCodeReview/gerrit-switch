@@ -69,6 +69,9 @@ chrome.runtime.onInstalled.addListener(function() {
             new chrome.declarativeContent.PageStateMatcher({
               pageUrl: { hostSuffix: '-review.staging-git.corp.google.com' },
             }),
+	    new chrome.declarativeContent.PageStateMatcher({
+	      pageUrl: { hostSuffix: 'localhost' },
+	    }),
           ],
           // And shows the extension's page action.
           actions: [ new chrome.declarativeContent.ShowPageAction() ]
@@ -96,6 +99,7 @@ var WEB_REQUEST_FILTER_URLS = {
     '*://*.googlesource.com/*',
     "*://*.git.corp.google.com/*",
     "*://*.staging-git.corp.google.com/*",
+    "*://*.localhost/*",
   ]
 };
 
@@ -201,7 +205,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
         value: 'polygerrit',
         httpOnly: true,
         path: '/',
-        secure: true,
+        secure: false,
       }, function() {
         // PolyGerrit handles Gerrit URL -> PolyGerrit URL redirection.
         chrome.tabs.reload(tab.id, {bypassCache: true});
