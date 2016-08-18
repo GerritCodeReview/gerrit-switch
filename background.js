@@ -26,10 +26,13 @@ _gaq.push(['_trackPageview']);
 
 var RequestType = {
   NAV: 'nav',
+  TIMING: 'timing-report',
 };
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.type === RequestType.NAV) {
+chrome.runtime.onMessage.addListener(function(request, detail, sendResponse) {
+  if (request.type === RequestType.TIMING) {
+    _gaq.push(['_trackTiming', detail.category, detail.name, detail.name]);
+  } else if (request.type === RequestType.NAV) {
     _gaq.push(['_trackPageview', request.url]);
   }
 });
@@ -141,7 +144,7 @@ chrome.storage.sync.get({
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   if (namespace !== 'sync') { return; }
 
-  for (key in changes) {
+  for (var key in changes) {
     if (key === 'canary') {
       useCanary = changes[key].newValue;
     }
@@ -209,3 +212,8 @@ chrome.pageAction.onClicked.addListener(function(tab) {
     }
   });
 });
+
+
+var reportTiming = function() {
+  console.log('background hit' + arguments);
+};
