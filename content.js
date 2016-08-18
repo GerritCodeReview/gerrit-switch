@@ -20,5 +20,8 @@
   if (isPolyGerrit) {
     // TODO(andybons): Track actions and integrate with the Gerrit JS API.
     // PageJS isn't in scope and is a pain to latch on to for navigation events.
+    document.addEventListener('timing-report', function(e) {
+      chrome.runtime.sendMessage({type: 'timing-report', detail: e.detail});
+    });
   }
 })();

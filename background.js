@@ -18,7 +18,8 @@ _gaq.push(['_trackPageview']);
 
 (function() {
   var ga = document.createElement('script');
-  ga.type = 'text/javascript'; ga.async = true;
+  ga.type = 'text/javascript';
+  ga.async = true;
   ga.src = 'https://ssl.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0];
   s.parentNode.insertBefore(ga, s);
@@ -26,10 +27,13 @@ _gaq.push(['_trackPageview']);
 
 var RequestType = {
   NAV: 'nav',
+  TIMING: 'timing-report',
 };
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.type === RequestType.NAV) {
+chrome.runtime.onMessage.addListener(function(request, detail, sendResponse) {
+  if (request.type === RequestType.TIMING) {
+    _gaq.push(['_trackTiming', detail.category, detail.name, detail.name]);
+  } else if (request.type === RequestType.NAV) {
     _gaq.push(['_trackPageview', request.url]);
   }
 });
@@ -141,7 +145,7 @@ chrome.storage.sync.get({
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   if (namespace !== 'sync') { return; }
 
-  for (key in changes) {
+  for (var key in changes) {
     if (key === 'canary') {
       useCanary = changes[key].newValue;
     }
