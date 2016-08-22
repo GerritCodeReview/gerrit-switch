@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08450b84_dec5a53a",
+        "filename": "background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1021482
+      },
+      "writtenOn": "2016-08-22T20:04:06Z",
+      "side": 1,
+      "message": "Is this the same as https://developers.google.com/analytics/devguides/collection/analyticsjs/user-timings#user_timings_fields ?",
+      "revId": "172d05e574c624f6196d1881d9c59dedc32f4b9f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
