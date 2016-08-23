@@ -16,6 +16,24 @@
       "revId": "172d05e574c624f6196d1881d9c59dedc32f4b9f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6815a7be_e99fb54d",
+        "filename": "background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2016-08-23T17:39:47Z",
+      "side": 1,
+      "message": "Well, since deprecated _gaq is used here, here\u0027s the appropriate doc:\nhttps://developers.google.com/analytics/devguides/collection/gajs/gaTrackingTiming",
+      "parentUuid": "08450b84_dec5a53a",
+      "revId": "172d05e574c624f6196d1881d9c59dedc32f4b9f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
