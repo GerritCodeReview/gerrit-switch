@@ -30,9 +30,10 @@ var RequestType = {
   TIMING: 'timing-report',
 };
 
-chrome.runtime.onMessage.addListener(function(request, detail, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.type === RequestType.TIMING) {
-    _gaq.push(['_trackTiming', detail.category, detail.name, detail.name]);
+    var detail = request.detail;
+    _gaq.push(['_trackTiming', detail.category, detail.name, detail.value]);
   } else if (request.type === RequestType.NAV) {
     _gaq.push(['_trackPageview', request.url]);
   }
