@@ -34,6 +34,24 @@
       "revId": "172d05e574c624f6196d1881d9c59dedc32f4b9f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e84517e6_9d82e3fd",
+        "filename": "background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1021482
+      },
+      "writtenOn": "2016-08-23T19:29:53Z",
+      "side": 1,
+      "message": "Got it. Was just making sure it was a support GA thing.",
+      "parentUuid": "6815a7be_e99fb54d",
+      "revId": "172d05e574c624f6196d1881d9c59dedc32f4b9f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
