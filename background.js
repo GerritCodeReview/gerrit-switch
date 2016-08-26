@@ -14,7 +14,7 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-73551813-1']);
-_gaq.push(['_trackPageview']);
+_gaq.push(['_setSiteSpeedSampleRate', 100]);
 
 (function() {
   var ga = document.createElement('script');
@@ -26,17 +26,25 @@ _gaq.push(['_trackPageview']);
 })();
 
 var RequestType = {
-  NAV: 'nav',
+  NAV: 'nav-report',
   TIMING: 'timing-report',
 };
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.type === RequestType.TIMING) {
-    var detail = request.detail;
-    _gaq.push(['_trackTiming', detail.category, detail.name, detail.value]);
-  } else if (request.type === RequestType.NAV) {
-    _gaq.push(['_trackPageview', request.url]);
+chrome.runtime.onMessage.addListener(function(request) {
+  var detail = request.detail;
+  if (detail.host) {
+    _gaq.push(['_setDomainName', detail.host]);
   }
+
+  switch (request.type) {
+    case RequestType.TIMING:
+      var time = Math.round(detail.value);
+      _gaq.push(['_trackTiming', detail.category, detail.name, time]);
+      break;
+    case RequestType.NAV:
+      _gaq.push(['_trackPageview', detail.value]);
+      break;
+  };
 });
 
 function loadImage(path, width, height) {
