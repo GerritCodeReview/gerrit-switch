@@ -12,16 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 (function() {
-  // TODO(andybons): Integrate with the Gerrit JS API. Since this is loaded
-  // before the Gerrit object is in scope, this type of integration may require
-  // an event to be fired to indicate that the Gerrit object is available.
   var appEl = document.querySelector('gr-app');
   var isPolyGerrit = !!appEl;
+
   if (isPolyGerrit) {
-    // TODO(andybons): Track actions and integrate with the Gerrit JS API.
-    // PageJS isn't in scope and is a pain to latch on to for navigation events.
-    document.addEventListener('timing-report', function(e) {
-      chrome.runtime.sendMessage({type: 'timing-report', detail: e.detail});
+    var reportToBackground = function(e) {
+      e.detail.host = location.host;
+      chrome.runtime.sendMessage({type: e.type, detail: e.detail});
+    };
+    document.addEventListener('timing-report', reportToBackground);
+    document.addEventListener('nav-report', reportToBackground);
+  } else {
+    chrome.runtime.sendMessage({
+      type: 'nav-report',
+      detail: {
+        value: '/#/', // Report GWT UI as dashboards landing url.
+        host: location.host,
+      },
     });
   }
+
 })();
