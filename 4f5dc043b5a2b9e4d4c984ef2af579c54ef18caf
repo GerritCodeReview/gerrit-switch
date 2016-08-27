@@ -34,6 +34,24 @@
       "revId": "4f5dc043b5a2b9e4d4c984ef2af579c54ef18caf",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5918a63_8b2f2df0",
+        "filename": "content.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1021482
+      },
+      "writtenOn": "2016-08-27T05:02:20Z",
+      "side": 1,
+      "message": "Ah I see 👍",
+      "parentUuid": "457a8ef7_488c5fe2",
+      "revId": "4f5dc043b5a2b9e4d4c984ef2af579c54ef18caf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
