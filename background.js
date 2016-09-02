@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-73551813-1']);
-_gaq.push(['_setSiteSpeedSampleRate', 100]);
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js',
+'ga');
 
-(function() {
-  var ga = document.createElement('script');
-  ga.type = 'text/javascript';
-  ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(ga, s);
-})();
+ga('create', 'UA-73551813-1', {
+  'siteSpeedSampleRate': 100,
+  'cookieDomain': 'none',
+});
+ga('set', 'checkProtocolTask', null);
+ga('send', 'pageview');
 
 var RequestType = {
   NAV: 'nav-report',
@@ -32,17 +32,25 @@ var RequestType = {
 
 chrome.runtime.onMessage.addListener(function(request) {
   var detail = request.detail;
-  if (detail.host) {
-    _gaq.push(['_setDomainName', detail.host]);
-  }
+  var version = detail.ver || chrome.app.getDetails().version;
+
+  ga('set', 'dimension1', version);
+  ga('set', 'dimension2', detail.host);
 
   switch (request.type) {
     case RequestType.TIMING:
       var time = Math.round(detail.value);
-      _gaq.push(['_trackTiming', detail.category, detail.name, time]);
+      var hourInMillis = 1000 * 60 * 60;
+      if (0 < time && time < hourInMillis) {
+        ga('send', 'timing', detail.category, detail.name, time);
+      } else {
+        console.log(
+          'timing out of range: ' + [detail.category, detail.name, time]);
+      }
       break;
     case RequestType.NAV:
-      _gaq.push(['_trackPageview', detail.value]);
+      ga('set', 'page', detail.value);
+      ga('send', 'pageview');
       break;
   };
 });
@@ -197,7 +205,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
   };
   chrome.cookies.get(cookieID, function(cookie) {
     if (cookie) {
-      _gaq.push(['_trackEvent', 'Page Action', 'Switch to Gerrit']);
+      ga('send', 'event', 'Page Action', 'Switch to Gerrit');
       chrome.cookies.remove(cookieID, function() {
         // The GWT UI does not handle PolyGerrit URL redirection.
         chrome.tabs.update(tab.id, {
@@ -207,7 +215,7 @@ chrome.pageAction.onClicked.addListener(function(tab) {
         });
       });
     } else {
-      _gaq.push(['_trackEvent', 'Page Action', 'Switch to PolyGerrit']);
+      ga('send', 'event', 'Page Action', 'Switch to PolyGerrit');
       chrome.cookies.set({
         url: tab.url,
         name: 'GERRIT_UI',
