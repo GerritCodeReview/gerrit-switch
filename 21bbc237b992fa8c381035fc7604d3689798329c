@@ -22,6 +22,24 @@
       "revId": "21bbc237b992fa8c381035fc7604d3689798329c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "111e1d18_768b50ca",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2016-09-02T18:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316161bc_3724581c",
+      "revId": "21bbc237b992fa8c381035fc7604d3689798329c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
     }
   ]
 }
