@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Gerrit UI Switcher",
   "description": "Easily switch between the current Gerrit UI and the new PolyGerrit UI",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "background": {
     "scripts": [
       "background.js"
@@ -45,5 +45,5 @@
     "*://*.git.corp.google.com/*",
     "*://*.staging-git.corp.google.com/*"
   ],
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
 }

@@ -16,12 +16,30 @@
   var isPolyGerrit = !!appEl;
 
   if (isPolyGerrit) {
+    var page;
+    var pendingEvents = [];
     var reportToBackground = function(e) {
       e.detail.host = location.host;
       chrome.runtime.sendMessage({type: e.type, detail: e.detail});
     };
-    document.addEventListener('timing-report', reportToBackground);
-    document.addEventListener('nav-report', reportToBackground);
+    var reportNav = function(e) {
+      page = e.detail.value;
+      reportToBackground(e);
+      if (pendingEvents.length) {
+        pendingEvents.forEach(reportToBackground);
+        pendingEvents = [];
+      }
+    };
+    var reportTiming = function(e) {
+      if (page) {
+        reportToBackground(e);
+      } else {
+        pendingEvents.push(
+            {type: e.type, detail: Object.assign({}, e.detail)});
+      }
+    };
+    document.addEventListener('timing-report', reportTiming);
+    document.addEventListener('nav-report', reportNav);
   } else {
     chrome.runtime.sendMessage({
       type: 'nav-report',
