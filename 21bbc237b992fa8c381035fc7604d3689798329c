@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "316161bc_3724581c",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1021482
+      },
+      "writtenOn": "2016-09-02T18:22:34Z",
+      "side": 1,
+      "message": "Revert this. Enums are LikeThis",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "21bbc237b992fa8c381035fc7604d3689798329c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
