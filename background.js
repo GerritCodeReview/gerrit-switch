@@ -216,7 +216,10 @@ chrome.pageAction.onClicked.addListener(function(tab) {
       });
     } else {
       ga('send', 'event', 'Page Action', 'Switch to PolyGerrit');
+      var curYear = new Date().getFullYear();
+      var twoYearsFromNow = Math.round(new Date().setFullYear(curYear + 2) / 1000);
       chrome.cookies.set({
+        expirationDate: twoYearsFromNow,
         url: tab.url,
         name: 'GERRIT_UI',
         value: 'polygerrit',
