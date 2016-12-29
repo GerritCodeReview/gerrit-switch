@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bad8d7b0_eda781a0",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2016-12-29T01:10:49Z",
+      "side": 1,
+      "message": "I\u0027d add Math.round to be safe - not sure how fractionary numbers are handled.",
+      "range": {
+        "startLine": 220,
+        "startChar": 60,
+        "endLine": 220,
+        "endChar": 66
+      },
+      "revId": "6727c55e7e1acda16dba6f22e37f532e5eef1aee",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bad8d7b0_8db245e0",
+        "filename": "background.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1024777
+      },
+      "writtenOn": "2016-12-29T01:10:49Z",
+      "side": 1,
+      "message": "TIL setYear is deprecated in favor of setFullYear:\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setYear",
+      "range": {
+        "startLine": 220,
+        "startChar": 39,
+        "endLine": 220,
+        "endChar": 46
+      },
+      "revId": "6727c55e7e1acda16dba6f22e37f532e5eef1aee",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": false
+    }
+  ]
+}
