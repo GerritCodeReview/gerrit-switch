@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0387b77_fbe5bb78",
+        "filename": "background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1021482
+      },
+      "writtenOn": "Feb 6, 2017 1:19:22 PM",
+      "side": 1,
+      "message": "s/\u003d\u003d/\u003d\u003d\u003d",
+      "range": {
+        "startLine": 207,
+        "startChar": 31,
+        "endLine": 207,
+        "endChar": 33
+      },
+      "revId": "9248aaaf9625ba500aa17e0ee8885cc219fea028",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153",
+      "unresolved": true
+    }
+  ]
+}
