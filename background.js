@@ -204,9 +204,17 @@ chrome.pageAction.onClicked.addListener(function(tab) {
     url: tab.url,
   };
   chrome.cookies.get(cookieID, function(cookie) {
-    if (cookie) {
+    if (cookie && cookie.value === 'polygerrit') {
       ga('send', 'event', 'Page Action', 'Switch to Gerrit');
-      chrome.cookies.remove(cookieID, function() {
+      chrome.cookies.set({
+        expirationDate: twoYearsFromNow,
+        url: tab.url,
+        name: 'GERRIT_UI',
+        value: 'gwt',
+        httpOnly: true,
+        path: '/',
+        secure: true,
+      }, function() {
         // The GWT UI does not handle PolyGerrit URL redirection.
         chrome.tabs.update(tab.id, {
           url: getGWTRedirectURL(new URL(tab.url)),
