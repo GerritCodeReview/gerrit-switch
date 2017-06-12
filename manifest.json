@@ -2,7 +2,8 @@
   "manifest_version": 2,
   "name": "Gerrit UI Switcher",
   "description": "Easily switch between the current Gerrit UI and the new PolyGerrit UI",
-  "version": "0.6.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg7Iwz2iik1uCZkjkGv62uc5nRzHO1m4d8S6hBaz2zawyfjvL0+oP2OwrzkTZhfv63P66vtqx0xhlIiY/4HW3slfLXqvQLkXu1HtTjW/Tgjc2HtCdIFfFtARmyysRAeG7vBUPQwMl5u+8jy4aRqhE+c1TKz/Ca88Mw/9r3193JpIhFLXcFohuJl6a+1ANNwZIR8BtbAb0aLw02lVkV+LkTn3fYWWabs93+P+ly+RH5GKeF/Qj8nvJ1czVMdCV4YSR6VrknAYnz1ZFds/vIKetFW8EP4EBCsdah5ZS2bsfe7t6XpkT0U+bVrLhjknpUx0n7QSKKRYkenVvDp+pNPHCgwIDAQAB",
+  "version": "0.6.1",
   "background": {
     "scripts": [
       "background.js"
